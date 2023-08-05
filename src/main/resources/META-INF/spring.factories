@@ -1,0 +1,2 @@
+# aaseeClient starter
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.aasee.asapiclientsdk.AaseeApiClientConfig
