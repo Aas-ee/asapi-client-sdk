@@ -10,6 +10,7 @@ import cn.hutool.json.JSON;
 import cn.hutool.json.JSONUtil;
 import com.aasee.asapiclientsdk.model.User;
 import com.aasee.asapicommon.model.entity.SmartBoxKey;
+import com.aasee.asapicommon.model.entity.Translation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -158,6 +159,30 @@ public class AaseeApiClient {
         log.info("result: " + result);
         return result;
     }
+
+    public String getTranByPost(Translation translation) throws UnsupportedEncodingException {
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put("query", translation.getQuery());
+        paramMap.put("language", translation.getLanguage());
+//        String result = HttpUtil.post("http://121.37.221.78:5000/api/getKWMulist", paramMap);
+//        log.info("result: " + result);
+//        String json = JSONUtil.toJsonStr(paramMap);
+        //        String encode = URLEncoder.encode(json, "utf-8");
+//        log.info("json: " + json);
+        HttpResponse httpResponse = HttpRequest.post(GATEWAY_HOST+"/word/tryTran")
+//                .header(Header.CONTENT_TYPE,"application/x-www-form-urlencoded; charset=UTF-8")
+                .headerMap(getHeaderMap("translation"),true)
+                .form(paramMap)
+                .execute();
+//        HttpUtil.post("http://localhost:8123/api/name/user",)
+        log.info("status: "+httpResponse.getStatus());
+        String result = httpResponse.body();
+//        String decode = URLDecoder.decode(result, "utf-8");
+        log.info("result: " + result);
+        return result;
+    }
+
+
 
 
 
